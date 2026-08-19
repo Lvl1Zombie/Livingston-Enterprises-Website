@@ -4,8 +4,17 @@ Static website for [livingstonrefinishing.com](https://livingstonrefinishing.com
 
 ## Publishing
 
-GitHub Pages publishes the repository root automatically. Every push to the
-`main` branch updates the live website after the Pages deployment completes.
+Production is hosted by Hostinger. In hPanel, connect this repository under
+**Websites → Dashboard → Advanced → Git** with these settings:
+
+- Branch: `main`
+- Root directory: `public_html`
+- Auto-deployment: enabled
+
+Every push to `main` then updates the production website automatically.
+
+GitHub Pages remains enabled as a staging preview at
+[lvl1zombie.github.io/Livingston-Enterprises-Website](https://lvl1zombie.github.io/Livingston-Enterprises-Website/).
 
 ## Pages
 
