@@ -4,17 +4,12 @@ Static website for [livingstonrefinishing.com](https://livingstonrefinishing.com
 
 ## Publishing
 
-Production is hosted by Hostinger. In hPanel, connect this repository under
-**Websites → Dashboard → Advanced → Git** with these settings:
+Production is hosted by GitHub Pages from the repository's `main` branch. The
+custom domain is stored in `CNAME`, and its DNS records point to GitHub Pages.
+HTTPS is enforced for both the apex domain and its `www` redirect.
 
-- Branch: `main`
-- Root directory: `public_html`
-- Auto-deployment: enabled
-
-Every push to `main` then updates the production website automatically.
-
-GitHub Pages remains enabled as a staging preview at
-[lvl1zombie.github.io/Livingston-Enterprises-Website](https://lvl1zombie.github.io/Livingston-Enterprises-Website/).
+Every push to `main` automatically rebuilds the production website. The default
+GitHub Pages URL redirects to the custom domain.
 
 ## Challenger-site strategy
 
@@ -41,8 +36,7 @@ unique furniture-specific copy and dedicated service URLs.
 The site is fully static and does not depend on React or a build step. The
 assessment form honestly prepares an email in the visitor's mail app; it does
 not claim to send or store a submission. Connecting silent background delivery
-requires an approved mail provider, SMTP credentials or a Hostinger form
-endpoint.
+requires an approved form or mail provider.
 
 Before launch, the owner should also provide:
 
