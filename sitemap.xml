@@ -1,13 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://livingstonrefinishing.com/</loc><lastmod>2026-08-19</lastmod></url>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <url>
+    <loc>https://livingstonrefinishing.com/</loc><lastmod>2026-08-22</lastmod>
+    <image:image><image:loc>https://livingstonrefinishing.com/assets/hero-craftsman.webp</image:loc><image:caption>Furniture restoration craftsman at Livingston Enterprises</image:caption></image:image>
+    <image:image><image:loc>https://livingstonrefinishing.com/uploads/dining-table-before.webp</image:loc><image:caption>Dining table before restoration</image:caption></image:image>
+    <image:image><image:loc>https://livingstonrefinishing.com/uploads/dining-table-after.webp</image:loc><image:caption>Dining table after restoration</image:caption></image:image>
+    <image:image><image:loc>https://livingstonrefinishing.com/uploads/occasional-table-before.webp</image:loc><image:caption>Occasional table before restoration</image:caption></image:image>
+    <image:image><image:loc>https://livingstonrefinishing.com/uploads/occasional-table-after.webp</image:loc><image:caption>Occasional table after restoration</image:caption></image:image>
+  </url>
   <url><loc>https://livingstonrefinishing.com/furniture-refinishing/</loc><lastmod>2026-08-19</lastmod></url>
   <url><loc>https://livingstonrefinishing.com/furniture-repair/</loc><lastmod>2026-08-19</lastmod></url>
   <url><loc>https://livingstonrefinishing.com/antique-restoration/</loc><lastmod>2026-08-19</lastmod></url>
   <url><loc>https://livingstonrefinishing.com/door-refinishing/</loc><lastmod>2026-08-19</lastmod></url>
   <url><loc>https://livingstonrefinishing.com/projects/</loc><lastmod>2026-08-19</lastmod></url>
-  <url><loc>https://livingstonrefinishing.com/about/</loc><lastmod>2026-08-19</lastmod></url>
-  <url><loc>https://livingstonrefinishing.com/contact/</loc><lastmod>2026-08-19</lastmod></url>
-  <url><loc>https://livingstonrefinishing.com/faq/</loc><lastmod>2026-08-19</lastmod></url>
-  <url><loc>https://livingstonrefinishing.com/testimonials/</loc><lastmod>2026-08-19</lastmod></url>
+  <url><loc>https://livingstonrefinishing.com/about/</loc><lastmod>2026-08-22</lastmod></url>
+  <url><loc>https://livingstonrefinishing.com/contact/</loc><lastmod>2026-08-22</lastmod></url>
+  <url><loc>https://livingstonrefinishing.com/faq/</loc><lastmod>2026-08-22</lastmod></url>
+  <url><loc>https://livingstonrefinishing.com/testimonials/</loc><lastmod>2026-08-22</lastmod></url>
 </urlset>
