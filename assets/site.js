@@ -4,6 +4,7 @@
   const revealSelector = [
     ".section-head",
     ".before-after-card",
+    ".review-card",
     ".service-card",
     ".project-card",
     ".step",
@@ -63,6 +64,46 @@
   document.querySelectorAll("[data-year]").forEach(node => {
     node.textContent = String(new Date().getFullYear());
   });
+
+  const archiveReviewCards = Array.from(document.querySelectorAll(".review-archive-grid .review-card"));
+  if (archiveReviewCards.length) {
+    const reviewButtons = archiveReviewCards.map((card, index) => {
+      const quote = card.querySelector("blockquote");
+      if (!quote) return null;
+
+      const button = document.createElement("button");
+      const quoteId = `review-text-${index + 1}`;
+      quote.id = quoteId;
+      button.className = "review-expand";
+      button.type = "button";
+      button.hidden = true;
+      button.setAttribute("aria-controls", quoteId);
+      button.setAttribute("aria-expanded", "false");
+      button.innerHTML = "<span>Read full review</span><span aria-hidden=\"true\">↓</span>";
+      card.append(button);
+
+      button.addEventListener("click", () => {
+        const expanded = card.classList.toggle("is-expanded");
+        button.setAttribute("aria-expanded", String(expanded));
+        button.innerHTML = expanded
+          ? "<span>Collapse review</span><span aria-hidden=\"true\">↑</span>"
+          : "<span>Read full review</span><span aria-hidden=\"true\">↓</span>";
+        quote.scrollTop = 0;
+      });
+
+      return { button, card, quote };
+    }).filter(Boolean);
+
+    const updateReviewButtons = () => {
+      reviewButtons.forEach(({ button, card, quote }) => {
+        if (card.classList.contains("is-expanded")) return;
+        button.hidden = quote.scrollHeight <= quote.clientHeight + 2;
+      });
+    };
+
+    requestAnimationFrame(updateReviewButtons);
+    window.addEventListener("resize", updateReviewButtons, { passive: true });
+  }
 
   const track = (eventName, details = {}) => {
     window.dataLayer = window.dataLayer || [];
