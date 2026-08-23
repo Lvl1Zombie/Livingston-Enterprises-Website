@@ -65,7 +65,7 @@
     node.textContent = String(new Date().getFullYear());
   });
 
-  const archiveReviewCards = Array.from(document.querySelectorAll(".review-archive-grid .review-card"));
+  const archiveReviewCards = Array.from(document.querySelectorAll(".review-archive-grid .review-card, .reviews-grid .review-card"));
   if (archiveReviewCards.length) {
     const reviewButtons = archiveReviewCards.map((card, index) => {
       const quote = card.querySelector("blockquote");
