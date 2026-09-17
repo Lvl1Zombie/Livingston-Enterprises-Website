@@ -158,8 +158,58 @@
     link.addEventListener("click", () => track("email_click", { link_url: link.href }));
   });
 
+  const PLACEHOLDER_FORM_ENDPOINT = "YOUR_FORM_ID";
+  const FORM_UNCONFIGURED_MESSAGE = "This assessment form is not connected yet. Call 717-371-3463 or email livingstep@comcast.net.";
+  const FORM_ERROR_MESSAGE = "We could not send your request. Call 717-371-3463 or email livingstep@comcast.net.";
+  const FORM_SUCCESS_MESSAGE = "Thank you. Your assessment request was sent. If you have photos of the piece, email them to livingstep@comcast.net or mention them when we call. You can also call 717-371-3463.";
+
+  const formEndpointLooksReady = endpoint => {
+    if (!endpoint) return false;
+    if (/^mailto:/i.test(endpoint)) return false;
+    if (endpoint.includes(PLACEHOLDER_FORM_ENDPOINT)) return false;
+    try {
+      const url = new URL(endpoint, window.location.href);
+      return url.protocol === "https:" || url.protocol === "http:";
+    } catch {
+      return false;
+    }
+  };
+
+  const resolveFormEndpoint = form => {
+    const candidates = [
+      window.LIVINGSTON_FORM_ENDPOINT,
+      form.getAttribute("data-form-endpoint"),
+      form.getAttribute("action")
+    ];
+    return candidates.map(value => String(value || "").trim()).find(formEndpointLooksReady) || "";
+  };
+
+  const setFormStatus = (status, message, state) => {
+    if (!status) return;
+    status.textContent = message;
+    status.classList.remove("is-success", "is-error", "is-pending");
+    if (state) status.classList.add(state);
+  };
+
+  const readFormspreeMessage = async response => {
+    try {
+      const body = await response.json();
+      if (body && typeof body.error === "string" && body.error) return body.error;
+      if (body && Array.isArray(body.errors)) {
+        const details = body.errors.map(item => item && item.message).filter(Boolean);
+        if (details.length) return details.join(" ");
+      }
+    } catch {
+      /* non-JSON error bodies still get the generic fallback */
+    }
+    return "";
+  };
+
   document.querySelectorAll("[data-assessment-form]").forEach(form => {
     let started = false;
+    const status = form.querySelector("[data-form-status]");
+    const submitButton = form.querySelector('button[type="submit"]');
+
     form.addEventListener("input", () => {
       if (!started) {
         started = true;
@@ -167,27 +217,63 @@
       }
     }, { once: true });
 
-    form.addEventListener("submit", event => {
+    form.addEventListener("submit", async event => {
       event.preventDefault();
       if (!form.reportValidity()) return;
       if (form.elements.website && form.elements.website.value) return;
+      if (form.elements._gotcha && form.elements._gotcha.value) return;
+
+      const endpoint = resolveFormEndpoint(form);
+      if (!endpoint) {
+        setFormStatus(status, FORM_UNCONFIGURED_MESSAGE, "is-error");
+        return;
+      }
 
       const values = new FormData(form);
-      const lines = [
-        `Name: ${values.get("name") || ""}`,
-        `Phone: ${values.get("phone") || ""}`,
-        `Email: ${values.get("email") || ""}`,
-        `Town / ZIP: ${values.get("location") || ""}`,
-        `Service: ${values.get("service") || "Not sure"}`,
-        "",
-        "Project details:",
-        String(values.get("details") || "")
-      ];
-      const subject = `Furniture assessment request — ${values.get("name") || "website visitor"}`;
-      track("assessment_email_prepared", { service: values.get("service") || "unknown" });
-      window.location.href = `mailto:livingstep@comcast.net?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(lines.join("\n"))}`;
-      const status = form.querySelector("[data-form-status]");
-      if (status) status.textContent = "Your email app should open now. Attach project photos before sending. If it does not open, call 717-371-3463.";
+      const payload = {
+        name: String(values.get("name") || "").trim(),
+        phone: String(values.get("phone") || "").trim(),
+        email: String(values.get("email") || "").trim(),
+        location: String(values.get("location") || "").trim(),
+        service: String(values.get("service") || "Not sure yet"),
+        details: String(values.get("details") || "").trim(),
+        _subject: "Furniture assessment request from livingstonrefinishing.com"
+      };
+
+      if (submitButton) {
+        submitButton.disabled = true;
+        submitButton.setAttribute("aria-busy", "true");
+      }
+      setFormStatus(status, "Sending your assessment request…", "is-pending");
+
+      try {
+        const response = await fetch(endpoint, {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(payload)
+        });
+
+        if (!response.ok) {
+          const remoteMessage = await readFormspreeMessage(response);
+          setFormStatus(status, remoteMessage || FORM_ERROR_MESSAGE, "is-error");
+          return;
+        }
+
+        track("generate_lead", { form_name: "assessment" });
+        form.reset();
+        started = false;
+        setFormStatus(status, FORM_SUCCESS_MESSAGE, "is-success");
+      } catch {
+        setFormStatus(status, FORM_ERROR_MESSAGE, "is-error");
+      } finally {
+        if (submitButton) {
+          submitButton.disabled = false;
+          submitButton.removeAttribute("aria-busy");
+        }
+      }
     });
   });
 })();

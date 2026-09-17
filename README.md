@@ -34,9 +34,31 @@ unique furniture-specific copy and dedicated service URLs.
 ## Owner-dependent launch items
 
 The site is fully static and does not depend on React or a build step. The
-assessment form honestly prepares an email in the visitor's mail app; it does
-not claim to send or store a submission. Connecting silent background delivery
-requires an approved form or mail provider.
+`/contact/` assessment form posts through Formspree (or any compatible JSON
+endpoint) and, on success, pushes a `generate_lead` event to `dataLayer` for
+GTM/GA4. It does not upload photos.
+
+Until a real Formspree form ID is configured, the placeholder
+`https://formspree.io/f/YOUR_FORM_ID` is left in `assets/form-config.js` and
+on the contact form. The page still loads; a failed or unconfigured submit
+shows a phone/email fallback instead of opening a mail app.
+
+### Formspree (required for live lead email)
+
+Joshua must finish this once. There is no server or env file on GitHub Pages;
+the endpoint URL is the config.
+
+1. Create a free Formspree account at https://formspree.io
+2. Create a new form whose notification email is `livingstep@comcast.net`
+3. Copy the form endpoint, which looks like `https://formspree.io/f/abcdwxyz`
+4. Replace `YOUR_FORM_ID` in both places:
+   - `assets/form-config.js` → `window.LIVINGSTON_FORM_ENDPOINT`
+   - `contact/index.html` → the form `action` and `data-form-endpoint`
+5. Submit a test assessment, then confirm Formspree’s verification email so
+   later leads are delivered
+6. In GTM (`GTM-PTJKP8KL`), add a Custom Event trigger for `generate_lead`
+   and a GA4 Event tag (measurement ID is already loaded by GTM — do not
+   hardcode `gtag` or `G-238YFRPQGC` in this repo)
 
 Before launch, the owner should also provide:
 
