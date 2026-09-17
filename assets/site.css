@@ -379,6 +379,8 @@ textarea { min-height: 125px; resize: vertical; }
 input:focus, select:focus, textarea:focus { border-color: var(--wine); outline: 2px solid rgba(122,35,33,.12); }
 .form-note { margin: 0; color: var(--muted); font-size: .79rem; line-height: 1.55; }
 .form-note.is-pending { color: var(--ink-soft); }
+.form-note.is-success,
+.form-note.is-error { font-size: .88rem; font-weight: 600; }
 .form-note.is-success { color: #2f6a3a; }
 .form-note.is-error { color: #9b2c2c; }
 .assessment-form .button[disabled] { opacity: .65; cursor: wait; }
@@ -399,8 +401,8 @@ input:focus, select:focus, textarea:focus { border-color: var(--wine); outline: 
 .contact-form-panel label span { color: #d8c9b8; }
 .contact-form-panel .form-note { color: #b7a695; }
 .contact-form-panel .form-note.is-pending { color: #ead9c6; }
-.contact-form-panel .form-note.is-success { color: #c8e2c0; }
-.contact-form-panel .form-note.is-error { color: #f0b7a8; }
+.contact-form-panel .form-note.is-success { color: #d7f0cb; }
+.contact-form-panel .form-note.is-error { color: #f7c4b6; }
 .contact-card { padding: 40px; background: #fffdf9; color: var(--ink); border: 1px solid var(--line); box-shadow: 0 15px 44px rgba(36,29,24,.07); }
 .contact-card h2 { font-size: 2rem; }
 .contact-card a { color: var(--wine); }
