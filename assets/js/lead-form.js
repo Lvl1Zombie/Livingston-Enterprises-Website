@@ -2,7 +2,7 @@
   'use strict';
 
   // Replace this value with the /exec URL from the deployed Google Apps Script web app.
-  const FORM_ENDPOINT = 'https://script.google.com/macros/s/AKfycbwV7T_g_-RzAdXCWxbSMLGyk2dObthN5p2DMUua6nuDcgVUfvZR7yoyn0eHMYAg-EWU/exec';
+  const FORM_ENDPOINT = 'https://script.google.com/macros/s/AKfycbwS7l68kFJ9VMmjiswwNQxsrfuMB3QGIUvRCN7GbqJFAOQFHeXGfGLCRDgH1SsVjg1M/exec';
   const MAX_PHOTOS = 3;
   const MAX_FILE_BYTES = 5 * 1024 * 1024;
   const MAX_IMAGE_DIMENSION = 1600;
