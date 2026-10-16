@@ -1,11 +1,11 @@
 // Paste the Google Sheet ID between the quotes. The Sheet must contain a tab named "Livingston Leads".
-const SHEET_ID = 'PASTE_GOOGLE_SHEET_ID_HERE';
+const SHEET_ID = '1aGOR2CGMKQbh_t7ZnOoxlpJF_TJf2NJpmfEpggi2UnM';
 
 // Paste the ID of the Google Drive folder named "Livingston Lead Photos" between the quotes.
-const FOLDER_ID = 'PASTE_GOOGLE_DRIVE_FOLDER_ID_HERE';
+const FOLDER_ID = '1sKw_ROcvvatWHeUeJvrrHI89I55WO0Dk';
 
 // Replace this with the email address that should receive new-lead notifications.
-const NOTIFY_EMAIL = 'PASTE_NOTIFICATION_EMAIL_HERE';
+const NOTIFY_EMAIL = 'livingstep@comcast.net';
 
 const SHEET_NAME = 'Livingston Leads';
 const MAX_PHOTOS = 3;
